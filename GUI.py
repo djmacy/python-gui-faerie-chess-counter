@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-res
+
 def calculate_points():
     total_points = (pawn_var.get() or 0) * 1 + (peasant_var.get() or 0) * 2 + (soldier_var.get() or 0) * 3 + \
                    (rook_var.get() or 0) * 9 + (knight_var.get() or 0) * 4 + \
