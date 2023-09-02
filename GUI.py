@@ -24,6 +24,8 @@ def calculate_points():
 
     result_label.config(text=f"Total points: {total_points}\nRemaining points: {remaining_points}")
 
+
+
 root = tk.Tk()
 root.title("Faerie Chess Counter")
 
@@ -34,6 +36,7 @@ pawn_label = tk.Label(root, text="Pawns:")
 pawn_label.grid(row=1, column=0, sticky="w")
 pawn_var = tk.IntVar(root)
 pawn_dropdown = ttk.Combobox(root, textvariable=pawn_var, values=[4, 5, 6, 7, 8],state="readonly")
+pawn_dropdown.set(4)
 pawn_dropdown.grid(row=1, column=1)
 
 peasant_label = tk.Label(root, text="Peasants:")
@@ -47,6 +50,9 @@ soldier_label.grid(row=3, column=0, sticky="w")
 soldier_var = tk.IntVar(root)
 soldier_dropdown = ttk.Combobox(root, textvariable=soldier_var, values=list(range(3)),state="readonly")
 soldier_dropdown.grid(row=3, column=1)
+
+rank1_label = tk.Label(root, text="Rank I Pieces Left:")
+rank1_label.grid(row=4, column=0, sticky="w")
 
 piece_label = tk.Label(root, text="Rank II selection:")
 piece_label.grid(row=0, column=2, sticky="w")
