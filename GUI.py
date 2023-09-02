@@ -30,9 +30,9 @@ def update_rank1_pieces(*args):
 
 
 def update_rank2_pieces(*args):
-    total_rank2_pieces = rook_var.get() + knight_var.get() + bishop_var.get() + catapult_var.get() + chamberlain_var.get()
+    total_rank2_pieces = (rook_var.get() + knight_var.get() + bishop_var.get() + catapult_var.get() + chamberlain_var.get()
     + courtesan_var.get() + herald_var.get() + inquisitor_var.get() + lancer_var.get() + pontiff_var.get() + thief_var.get()
-    + tower_var.get()
+    + tower_var.get())
     rank2_label.config(text="Rank I Pieces Left: " + str(6 - total_rank2_pieces))
 
 
