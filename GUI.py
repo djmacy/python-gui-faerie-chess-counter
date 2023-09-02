@@ -24,7 +24,10 @@ def calculate_points():
 
     result_label.config(text=f"Total points: {total_points}\nRemaining points: {remaining_points}")
 
-
+def update_rank1_pieces(*args):
+    total_rank1_pieces = pawn_var.get() + peasant_var.get() + soldier_var.get()
+    rank1_label.config(text="Rank I Pieces Left: " + str(8 - total_rank1_pieces))
+    
 
 root = tk.Tk()
 root.title("Faerie Chess Counter")
@@ -35,24 +38,28 @@ piece_label.grid(row=0, column=0, sticky="w")
 pawn_label = tk.Label(root, text="Pawns:")
 pawn_label.grid(row=1, column=0, sticky="w")
 pawn_var = tk.IntVar(root)
-pawn_dropdown = ttk.Combobox(root, textvariable=pawn_var, values=[4, 5, 6, 7, 8],state="readonly")
+pawn_dropdown = ttk.Combobox(root, textvariable=pawn_var, values=[4, 5, 6, 7, 8], state="readonly")
 pawn_dropdown.set(4)
 pawn_dropdown.grid(row=1, column=1)
 
 peasant_label = tk.Label(root, text="Peasants:")
 peasant_label.grid(row=2, column=0, sticky="w")
 peasant_var = tk.IntVar(root)
-peasant_dropdown = ttk.Combobox(root, textvariable=peasant_var, values=list(range(3)),state="readonly")
+peasant_dropdown = ttk.Combobox(root, textvariable=peasant_var, values=list(range(3)), state="readonly")
 peasant_dropdown.grid(row=2, column=1)
 
 soldier_label = tk.Label(root, text="Soldiers:")
 soldier_label.grid(row=3, column=0, sticky="w")
 soldier_var = tk.IntVar(root)
-soldier_dropdown = ttk.Combobox(root, textvariable=soldier_var, values=list(range(3)),state="readonly")
+soldier_dropdown = ttk.Combobox(root, textvariable=soldier_var, values=list(range(3)), state="readonly")
 soldier_dropdown.grid(row=3, column=1)
 
-rank1_label = tk.Label(root, text="Rank I Pieces Left:")
+rank1_label = tk.Label(root, text="Rank I Pieces Left: 4")
 rank1_label.grid(row=4, column=0, sticky="w")
+
+pawn_var.trace_add("write", update_rank1_pieces)
+peasant_var.trace_add("write", update_rank1_pieces)
+soldier_var.trace_add("write", update_rank1_pieces)
 
 piece_label = tk.Label(root, text="Rank II selection:")
 piece_label.grid(row=0, column=2, sticky="w")
