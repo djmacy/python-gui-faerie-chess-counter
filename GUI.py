@@ -27,7 +27,14 @@ def calculate_points():
 def update_rank1_pieces(*args):
     total_rank1_pieces = pawn_var.get() + peasant_var.get() + soldier_var.get()
     rank1_label.config(text="Rank I Pieces Left: " + str(8 - total_rank1_pieces))
-    
+
+
+def update_rank2_pieces(*args):
+    total_rank2_pieces = rook_var.get() + knight_var.get() + bishop_var.get() + catapult_var.get() + chamberlain_var.get()
+    + courtesan_var.get() + herald_var.get() + inquisitor_var.get() + lancer_var.get() + pontiff_var.get() + thief_var.get()
+    + tower_var.get()
+    rank2_label.config(text="Rank I Pieces Left: " + str(6 - total_rank2_pieces))
+
 
 root = tk.Tk()
 root.title("Faerie Chess Counter")
@@ -57,6 +64,7 @@ soldier_dropdown.grid(row=3, column=1)
 rank1_label = tk.Label(root, text="Rank I Pieces Left: 4")
 rank1_label.grid(row=4, column=0, sticky="w")
 
+#dynamically updates how many pieces the user has left to select from in rank I
 pawn_var.trace_add("write", update_rank1_pieces)
 peasant_var.trace_add("write", update_rank1_pieces)
 soldier_var.trace_add("write", update_rank1_pieces)
@@ -135,6 +143,23 @@ tower_label.grid(row=12, column=2, sticky="w")
 tower_var = tk.IntVar(root)
 tower_dropdown = ttk.Combobox(root, textvariable=tower_var, values=list(range(2)),state="readonly")
 tower_dropdown.grid(row=12, column=3)
+
+rank2_label = tk.Label(root, text="Rank I Pieces Left: 6")
+rank2_label.grid(row=13, column=2, sticky="w")
+
+#dynamically updates how many pieces the user has left to select from in rank II
+rook_var.trace_add("write", update_rank2_pieces)
+knight_var.trace_add("write", update_rank2_pieces)
+bishop_var.trace_add("write", update_rank2_pieces)
+catapult_var.trace_add("write", update_rank2_pieces)
+chamberlain_var.trace_add("write", update_rank2_pieces)
+courtesan_var.trace_add("write", update_rank2_pieces)
+herald_var.trace_add("write", update_rank2_pieces)
+inquisitor_var.trace_add("write", update_rank2_pieces)
+lancer_var.trace_add("write", update_rank2_pieces)
+pontiff_var.trace_add("write", update_rank2_pieces)
+thief_var.trace_add("write", update_rank2_pieces)
+tower_var.trace_add("write", update_rank2_pieces)
 
 piece_label = tk.Label(root, text="Rank III selection:")
 piece_label.grid(row=0, column=4, sticky="w")
