@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
+#This will calculate the points after the calculate point button has been pressed on the GUI
 def calculate_points():
     total_points = (pawn_var.get() or 0) * 1 + (peasant_var.get() or 0) * 2 + (soldier_var.get() or 0) * 3 + \
                    (rook_var.get() or 0) * 9 + (knight_var.get() or 0) * 4 + \
@@ -14,6 +15,7 @@ def calculate_points():
 
     selected_difficulty = difficulty_var.get()
 
+    #Number of points allowed based on difficulty
     difficulties = {
         "Beginner": 65,
         "Intermediate": 70,
@@ -24,11 +26,12 @@ def calculate_points():
 
     result_label.config(text=f"Total points: {total_points}\nRemaining points: {remaining_points}")
 
+#Function will be used to dynamically update the label which will indicate how many pieces they have left to pick for rank I
 def update_rank1_pieces(*args):
     total_rank1_pieces = pawn_var.get() + peasant_var.get() + soldier_var.get()
     rank1_label.config(text="Rank I Pieces Left: " + str(8 - total_rank1_pieces))
 
-
+#Function will be used to dynamically update the label which will indicate how many pieces they have left to pick for rank II
 def update_rank2_pieces(*args):
     total_rank2_pieces = (
             rook_var.get() + knight_var.get() + bishop_var.get() + catapult_var.get() + chamberlain_var.get() +
@@ -37,6 +40,7 @@ def update_rank2_pieces(*args):
     )
     rank2_label.config(text="Rank I Pieces Left: " + str(6 - total_rank2_pieces))
 
+#Function will be used to dynamically update the label which will indicate how many pieces they have left to pick for rank III
 def update_rank3_pieces(*args):
     total_rank3_pieces = queen_var.get() + jester_var.get() + king_var.get() + regent_var.get()
     rank3_label.config(text="Rank I Pieces Left: " + str(2 - total_rank3_pieces))
@@ -50,6 +54,7 @@ piece_label.grid(row=0, column=0, sticky="w")
 pawn_label = tk.Label(root, text="Pawns:")
 pawn_label.grid(row=1, column=0, sticky="w")
 pawn_var = tk.IntVar(root)
+#User can only select from 4-8 pawns
 pawn_dropdown = ttk.Combobox(root, textvariable=pawn_var, values=[4, 5, 6, 7, 8], state="readonly")
 pawn_dropdown.set(4)
 pawn_dropdown.grid(row=1, column=1)
@@ -57,6 +62,7 @@ pawn_dropdown.grid(row=1, column=1)
 peasant_label = tk.Label(root, text="Peasants:")
 peasant_label.grid(row=2, column=0, sticky="w")
 peasant_var = tk.IntVar(root)
+#User can only select from 0-2 peasants and soldiers
 peasant_dropdown = ttk.Combobox(root, textvariable=peasant_var, values=list(range(3)), state="readonly")
 peasant_dropdown.grid(row=2, column=1)
 
@@ -69,7 +75,7 @@ soldier_dropdown.grid(row=3, column=1)
 rank1_label = tk.Label(root, text="Rank I Pieces Left: 4")
 rank1_label.grid(row=4, column=0, sticky="w")
 
-#dynamically updates how many pieces the user has left to select from in rank I
+#dynamically updates how many pieces the user has left to select from in rank I by calling the function defined above
 pawn_var.trace_add("write", update_rank1_pieces)
 peasant_var.trace_add("write", update_rank1_pieces)
 soldier_var.trace_add("write", update_rank1_pieces)
@@ -208,7 +214,6 @@ difficulty_var = tk.StringVar(root)
 difficulty_dropdown = ttk.Combobox(root, textvariable=difficulty_var, values=["Beginner", "Intermediate", "Advanced"], state="readonly")
 difficulty_dropdown.grid(row= 15, columns=1)
 
-difficulty_dropdown.defaultvalue = "Easy"
 difficulty_var.set("Beginner")
 
 calculate_button = tk.Button(root, text="Calculate Points", command=calculate_points)
