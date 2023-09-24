@@ -9,12 +9,16 @@ def calculate_points():
                    (chamberlain_var.get() or 0) * 6 + (courtesan_var.get() or 0) * 6 + \
                    (herald_var.get() or 0) * 6 + (inquisitor_var.get() or 0) * 8 + \
                    (lancer_var.get() or 0) * 5 + (pontiff_var.get() or 0) * 8 + \
-                   (thief_var.get() or 0) * 5 + (tower_var.get() or 0) * 10 + \
-                   (queen_var.get() or 0) * 12 + (king_var.get() or 0) * 0 + \
-                   (jester_var.get() or 0) * 12 + (regent_var.get() or 0) * 15
+                   (thief_var.get() or 0) * 5 + (tower_var.get() or 0) * 10
+
+    if queen_var.get() == "Queen" or queen_var.get() == "Jester":
+        total_points += 12
+    if king_var.get() == "King":
+        total_points += 0
+    if king_var.get() == "Regent":
+        total_points += 15
 
     selected_difficulty = difficulty_var.get()
-
     #Number of points allowed based on difficulty
     difficulties = {
         "Beginner": 65,
@@ -23,7 +27,6 @@ def calculate_points():
     }
 
     remaining_points = difficulties[selected_difficulty] - total_points
-
     result_label.config(text=f"Total points: {total_points}\nRemaining points: {remaining_points}")
 
 #Function will be used to dynamically update the label which will indicate how many pieces they have left to pick for rank I
@@ -39,11 +42,6 @@ def update_rank2_pieces(*args):
             thief_var.get() + tower_var.get()
     )
     rank2_label.config(text="Rank I Pieces Left: " + str(6 - total_rank2_pieces))
-
-#Function will be used to dynamically update the label which will indicate how many pieces they have left to pick for rank III
-def update_rank3_pieces(*args):
-    total_rank3_pieces = queen_var.get() + jester_var.get() + king_var.get() + regent_var.get()
-    rank3_label.config(text="Rank I Pieces Left: " + str(2 - total_rank3_pieces))
 
 root = tk.Tk()
 root.title("Faerie Chess Counter")
@@ -175,38 +173,22 @@ tower_var.trace_add("write", update_rank2_pieces)
 piece_label = tk.Label(root, text="Rank III selection:")
 piece_label.grid(row=0, column=4, sticky="w")
 
-queen_label = tk.Label(root, text="Queen:")
+queen_label = tk.Label(root, text="Queen or Jester:")
 queen_label.grid(row=1, column=4, sticky="w")
-queen_var = tk.IntVar(root)
-queen_dropdown = ttk.Combobox(root, textvariable=queen_var, values=list(range(2)),state="readonly")
+queen_var = tk.StringVar(root)
+queen_dropdown = ttk.Combobox(root, textvariable=queen_var, values=["Queen", "Jester"],state="readonly")
+queen_dropdown.set("Queen")
 queen_dropdown.grid(row=1, column=5)
 
-king_label = tk.Label(root, text="King:")
+king_label = tk.Label(root, text="King or Regent:")
 king_label.grid(row=2, column=4, sticky="w")
-king_var = tk.IntVar(root)
-king_dropdown = ttk.Combobox(root, textvariable=king_var, values=list(range(2)),state="readonly")
+king_var = tk.StringVar(root)
+king_dropdown = ttk.Combobox(root, textvariable=king_var, values=["King", "Regent"],state="readonly")
+king_dropdown.set("King")
 king_dropdown.grid(row=2, column=5)
 
-jester_label = tk.Label(root, text="Jester:")
-jester_label.grid(row=3, column=4, sticky="w")
-jester_var = tk.IntVar(root)
-jester_dropdown = ttk.Combobox(root, textvariable=jester_var, values=list(range(2)),state="readonly")
-jester_dropdown.grid(row=3, column=5)
-
-regent_label = tk.Label(root, text="Regent:")
-regent_label.grid(row=4, column=4, sticky="w")
-regent_var = tk.IntVar(root)
-regent_dropdown = ttk.Combobox(root, textvariable=regent_var, values=list(range(2)), state="readonly")
-regent_dropdown.grid(row=4, column=5)
-
-rank3_label = tk.Label(root, text="Rank I Pieces Left: 2")
+rank3_label = tk.Label(root, text="Rank III Pieces Left: 0")
 rank3_label.grid(row=5, column=4, sticky="w")
-
-#dynamically updates how many pieces the user has left to select from in rank I
-queen_var.trace_add("write", update_rank3_pieces)
-jester_var.trace_add("write", update_rank3_pieces)
-king_var.trace_add("write", update_rank3_pieces)
-regent_var.trace_add("write", update_rank3_pieces)
 
 difficulty_label = tk.Label(root, text="Difficulty:")
 difficulty_label.grid(rows = 15, column=0, sticky="w")
@@ -222,4 +204,5 @@ calculate_button.grid(row=16, column=0, columnspan=2)
 result_label = tk.Label(root, text="")
 result_label.grid(row=17, column=0, columnspan=2)
 
-root.mainloop()
+if __name__ == "__main__":
+    root.mainloop()
